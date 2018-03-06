@@ -182,6 +182,7 @@
 (def snvphyl-tool-steps (tool-steps (parse-ga snvphyl-ga)))
 
 (def snvphyl-freebayes-step (first (get (group-by #(get % "id") snvphyl-tool-steps) 6)))
+(def snvphyl-cat-step (first (get (group-by #(get % "id") snvphyl-tool-steps) 13)))
 
 (def snvphyl-freebayes-step-tool-params
   [[:parameter
@@ -297,7 +298,8 @@
             [:owner "nml"]
             [:url "https://toolshed.g2.bx.psu.edu"]
             [:revision "5c8ff92e38a9"]
-            [:-comment "WARNING: Latest revision fetched from https://toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd"]]))))
+            [:-comment "WARNING: Latest revision fetched from https://toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd"]]))
+    (is (nil? (tool-repo snvphyl-cat-step)))))
 
 (deftest parse-tool-params
   (testing "Parsing of sistr_cmd tool parameters."

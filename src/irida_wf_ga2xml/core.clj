@@ -93,14 +93,16 @@
                      r
                      (revision-from-url (galaxy-shed-url tool_id :https? false))))
         repo-info (vec (kw-quote name owner url revision))]
-    (vcons
-      :repository
-      (if changeset_revision
-        repo-info
-        (conj repo-info
-              [:-comment
-               (str "WARNING: Latest revision fetched from "
-                    (galaxy-shed-url tool_id))])))))
+    (if name
+      (vcons
+        :repository
+        (if changeset_revision
+          repo-info
+          (conj repo-info
+                [:-comment
+                 (str "WARNING: Latest revision fetched from "
+                      (galaxy-shed-url tool_id))])))
+      nil)))
 
 (defn tool-params-map
   "Get the tool parameters for a workflow step from the `tool_state` map.
@@ -154,16 +156,19 @@
     Vector representation of IRIDA workflow XML"
   [^String path & {:keys [^Boolean single-sample?
                           ^String wf-version
-                          ^String analysis-type]
+                          ^String analysis-type
+                          ^String wf-name]
                    :or   {single-sample? true
                           wf-version     "0.1.0"
-                          analysis-type  "DEFAULT"}}]
+                          analysis-type  "DEFAULT"
+                          wf-name nil}}]
   (let [j (parse-ga path)
+        {:strs [name]} j
         input (input-steps j)
         steps (tool-steps j)]
     [:iridaWorkflow
      [:id (uuid)]
-     [:name name]
+     [:name (if wf-name wf-name name)]
      [:version wf-version]
      [:analysisType analysis-type]
      [:inputs
@@ -174,4 +179,4 @@
       [:requiresSingleSample (str single-sample?)]]
      (vcons :parameters (vec (filter not-empty (mapcat tool-params-vec steps))))
      (vcons :outputs (vec (filter not-empty (mapcat get-step-outputs steps))))
-     (vcons :toolRepositories (vec (map tool-repo steps)))]))
+     (vcons :toolRepositories (vec (remove nil? (map tool-repo steps))))]))

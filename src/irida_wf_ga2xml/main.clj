@@ -8,7 +8,9 @@
   (:gen-class))
 
 (def cli-options
-  [["-t" "--analysis-type ANALYSIS_TYPE" "IRIDA AnalysisType"
+  [["-n" "--workflow-name WORKFLOW_NAME" "Workflow name (default is to extract name from workflow input file)"
+    :default nil]
+   ["-t" "--analysis-type ANALYSIS_TYPE" "IRIDA AnalysisType"
     :default "DEFAULT"
     :validate [#(re-matches #"[\w\-]+" %) "Can only contain word characters"]]
    ["-W" "--workflow-version WORKFLOW_VERSION" "Workflow version"
@@ -53,11 +55,12 @@
   (let [{:keys [action options exit-message ok?]} (validate-args args)]
     (if exit-message
       (exit (if ok? 0 1) exit-message)
-      (let [{:keys [analysis-type input workflow-version multi-sample]} options
+      (let [{:keys [analysis-type input workflow-version multi-sample workflow-name]} options
             xml-str (vec->indented-xml (to-wf-vec input
-                                          :wf-version workflow-version
-                                          :analysis-type analysis-type
-                                          :single-sample? (not multi-sample)
-                                          ))]
+                                                  :wf-version workflow-version
+                                                  :analysis-type analysis-type
+                                                  :single-sample? (not multi-sample)
+                                                  :wf-name workflow-name
+                                                  ))]
         (println xml-str)
         ))))
