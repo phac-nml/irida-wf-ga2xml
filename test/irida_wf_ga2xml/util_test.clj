@@ -5,6 +5,7 @@
 (def snvphyl-ga "test/data/snvphyl-1.0.1-workflow.ga")
 (def basic-ga "test/data/basic-sistr-fasta-workflow.ga")
 (def asm-ga "test/data/irida_workflow_structure.ga")
+(def masher-ga "test/data/refseq_masher.ga")
 
 (deftest keyword-quote
   (let [something "else"
@@ -25,6 +26,29 @@
   (is (in? ["a" "b" "c"] "c"))
   (is (nil? (in? [1 2 3] 4)))
   (is (nil? (in? ["a" "b" "c"] "z"))))
+
+(deftest remove-file-extension
+  (is (= (rm-file-ext "filename.txt")
+         "filename"))
+  (is (= (rm-file-ext "genome.fasta")
+         "genome"))
+  (is (= (rm-file-ext "more.than.one.period.test")
+         "more.than.one.period")))
+
+(deftest get-input-name
+  (testing "That we can get the tool_state name attribute of an input step"
+    (is (let [g-wf (parse-ga asm-ga)
+              input (input-steps g-wf)]
+          (= (input-name input)
+             "sequence_reads_paired")))
+    (is (let [g-wf (parse-ga basic-ga)
+              input (input-steps g-wf)]
+          (= (input-name input)
+             "Input Dataset")))
+    (is (let [g-wf (parse-ga masher-ga)
+              input (input-steps g-wf)]
+          (= (input-name input)
+             "Input Dataset Collection")))))
 
 (deftest paired-list-or-not
   (is (let [g-wf (parse-ga asm-ga)

@@ -29,6 +29,11 @@
   "Random UUID using Java stdlib function"
   [] (str (java.util.UUID/randomUUID)))
 
+(defn rm-file-ext
+  "Remove file extension from filename. 'filename.txt' -> 'filename'"
+  [s]
+  (clojure.string/replace s #"\.\w+$" ""))
+
 (defn parse-ga
   "Parse Galaxy workflow ga file as JSON into map"
   [path]
@@ -51,7 +56,7 @@
 
 (def step-type-tool? (partial step-type? "tool"))
 (def step-type-data_collection_input? (partial step-type? "data_collection_input"))
-(def step-type-data_input?  (partial step-type? "data_input"))
+(def step-type-data_input? (partial step-type? "data_input"))
 
 (defn step-input-name-reference?
   "Is workflow step reference input file for a workflow that requires a reference file? (e.g. SNVPhyl)"
@@ -102,6 +107,13 @@
   (let [tool_state (json/read-str tool_state)
         {:strs [collection_type]} tool_state]
     (= collection_type "list:paired")))
+
+(defn input-name
+  "Name attribute of an input step from 'tool_state' map."
+  [{:strs [tool_state]}]
+  (let [tool_state (json/read-str tool_state)
+        {:strs [name]} tool_state]
+    name))
 
 (defn has-http?
   "Does string `x` start with 'http'?"

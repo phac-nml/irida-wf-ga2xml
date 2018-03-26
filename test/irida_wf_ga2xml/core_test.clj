@@ -12,6 +12,7 @@
 (def basic-wf-ga "test/data/basic-sistr-fasta-workflow.ga")
 (def sistr-ga "test/data/irida_workflow_structure.ga")
 (def snvphyl-ga "test/data/snvphyl-1.0.1-workflow.ga")
+(def masher-ga "test/data/refseq_masher.ga")
 
 (def sistr-flash-step {"tool_errors"       nil,
                        "input_connections" {"input_type|fastq_collection" {"id" 0, "output_name" "output"}},
@@ -188,88 +189,88 @@
   [[:parameter
     {:name "freebayes-6-options_type.algorithmic_features.algorithmic_features_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.algorithmic_features.algorithmic_features_selector"}]]
    [:parameter
-    {:name "freebayes-6-options_type.population_mappability_priors.population_mappability_priors_selector",
+    {:name         "freebayes-6-options_type.population_mappability_priors.population_mappability_priors_selector",
      :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.population_mappability_priors.population_mappability_priors_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.reference_allele.reference_allele_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.reference_allele.reference_allele_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.T", :defaultValue "0.001"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.population_model.T"}]]
    [:parameter
     {:name "freebayes-6-options_type.input_filters.input_filters_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.input_filters.input_filters_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.population_model_selector", :defaultValue "True"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.population_model.population_model_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.optional_inputs.optional_inputs_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.optional_inputs.optional_inputs_selector"}]]
    [:parameter
     {:name "freebayes-6-reference_source.reference_source_selector", :defaultValue "history"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "reference_source.reference_source_selector"}]]
    [:parameter
     {:name "freebayes-6-target_limit_type.target_limit_type_selector", :defaultValue "do_not_limit"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "target_limit_type.target_limit_type_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.J", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.population_model.J"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.K", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.population_model.K"}]]
    [:parameter
     {:name "freebayes-6-options_type.genotype_likelihoods.genotype_likelihoods_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.genotype_likelihoods.genotype_likelihoods_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.O", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.O"}]]
    [:parameter
     {:name "freebayes-6-options_type.options_type_selector", :defaultValue "full"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.options_type_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.reporting.reporting_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.reporting.reporting_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.P", :defaultValue "1"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.population_model.P"}]]
    [:parameter
     {:name "freebayes-6-options_type.allele_scope.allele_scope_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.allele_scope.allele_scope_selector"}]]])
 
 (deftest tool-shed-repo-info-from-tool-id
@@ -280,13 +281,13 @@
 (deftest outputs-from-workflow-step
   (testing "Getting outputs for FLASH step in SISTR from reads workflow"
     (is (= (vec (get-step-outputs sistr-flash-step))
-           [[:output {:name "log_file", :fileName "flash.log"}]])))
+           [[:output {:name "flash", :fileName "flash.log"}]])))
   (testing "Getting outputs for sistr_cmd step"
     (is (= (vec (get-step-outputs sistr-cmd-step))
-           [[:output {:name "alleles_output", :fileName "sistr-alleles-out.json"}]
-            [:output {:name "cgmlst_profiles", :fileName "sistr-cgmlst-profiles.csv"}]
-            [:output {:name "novel_alleles", :fileName "sistr-novel-alleles.fasta"}]
-            [:output {:name "output_prediction_json", :fileName "sistr-predictions.json"}]]))))
+           [[:output {:name "sistr-alleles-out", :fileName "sistr-alleles-out.json"}]
+            [:output {:name "sistr-cgmlst-profiles", :fileName "sistr-cgmlst-profiles.csv"}]
+            [:output {:name "sistr-novel-alleles", :fileName "sistr-novel-alleles.fasta"}]
+            [:output {:name "sistr-predictions", :fileName "sistr-predictions.json"}]]))))
 
 (deftest parse-tool-shed-repo-info
   (testing "Parsing of Galaxy workflow step for tool toolshed repository information"
@@ -330,7 +331,23 @@
       (is (= (first wf)
              :iridaWorkflow))
       (is (= (count wf)
-             9)))))
+             9))))
+  (testing "Parsing of refseq_masher workflow"
+    (let [wf (to-wf-vec masher-ga
+                        :single-sample? true
+                        :wf-version "0.1.0"
+                        :analysis-type "refseq_masher")]
+      (is (= (first wf)
+             :iridaWorkflow))
+      (is (= (count wf)
+             9))
+      (is (= (last wf)
+             [:toolRepositories
+              [:repository
+               [:name "refseq_masher"]
+               [:owner "nml"]
+               [:url "https://toolshed.g2.bx.psu.edu"]
+               [:revision "26df66c32861"]]])))))
 
 (deftest vec-to-xml
   (let [flash-shed-info (tool-repo sistr-flash-step)]

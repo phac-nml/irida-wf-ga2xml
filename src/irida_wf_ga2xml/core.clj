@@ -61,9 +61,10 @@
     (let [renames (->> outputs
                        vals
                        (filter #(= (get % "action_type") "RenameDatasetAction"))
-                       (map (fn [{:strs [action_arguments output_name]}]
-                              {:name     output_name
-                               :fileName (get action_arguments "newname")})))]
+                       (map (fn [{:strs [action_arguments]}]
+                              (let [filename (get action_arguments "newname")]
+                                {:name     (rm-file-ext filename)
+                                 :fileName filename}))))]
       (map #(conj [:output] %) renames))))
 
 (defn tool-repo
@@ -173,10 +174,10 @@
      [:analysisType analysis-type]
      [:inputs
       (when (paired? input)
-        [:sequenceReadsPaired "sequence_reads_paired"])
+        [:sequenceReadsPaired (input-name input)])
       (when (needs-reference? j)
         [:reference "reference"])
       [:requiresSingleSample (str single-sample?)]]
      (vcons :parameters (vec (filter not-empty (mapcat tool-params-vec steps))))
      (vcons :outputs (vec (filter not-empty (mapcat get-step-outputs steps))))
-     (vcons :toolRepositories (vec (remove nil? (map tool-repo steps))))]))
+     (vcons :toolRepositories (vec (set (remove nil? (map tool-repo steps)))))]))
