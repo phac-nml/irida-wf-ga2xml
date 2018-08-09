@@ -6,7 +6,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/data.json "0.2.6"]
-                 [org.clojure/data.xml "0.2.0-alpha5"]]
+                 [org.clojure/data.xml "0.2.0-alpha5"]
+                 [org.clojure/data.zip "0.1.2"]]
   :main ^:skip-aot irida-wf-ga2xml.main
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}

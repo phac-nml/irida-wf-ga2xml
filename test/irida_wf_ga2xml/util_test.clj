@@ -17,6 +17,12 @@
             :cool      "beans"
             :awesome   1}))))
 
+(deftest keyword->string
+  (testing "Conversion of keyword into a string"
+    (is "string" (kw->str "string"))
+    (is "key" (kw->str :key))
+    (is (thrown? IllegalArgumentException (kw->str [:x])))))
+
 (deftest vector-cons
   (is (= (vcons :this [[:a] [:b] [:c]])
          [:this [:a] [:b] [:c]])))
@@ -83,11 +89,11 @@
 
 (deftest get-tool-steps
   (testing "Getting the tool steps of a Galaxy workflow"
-     (let [wf (parse-ga snvphyl-ga)
-           t-steps (tool-steps wf)]
-       (is (= (count t-steps) 17))
-       (is (= (map get-id t-steps) (range 2 19))))
-     (let [wf (parse-ga asm-ga)
-           t-steps (tool-steps wf)]
-       (is (= (count t-steps) 6))
-       (is (= (map get-id t-steps) (range 1 7))))))
+    (let [wf (parse-ga snvphyl-ga)
+          t-steps (tool-steps wf)]
+      (is (= (count t-steps) 17))
+      (is (= (map get-id t-steps) (range 2 19))))
+    (let [wf (parse-ga asm-ga)
+          t-steps (tool-steps wf)]
+      (is (= (count t-steps) 6))
+      (is (= (map get-id t-steps) (range 1 7))))))
