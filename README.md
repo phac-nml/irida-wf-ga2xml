@@ -1,11 +1,13 @@
 # irida-wf-ga2xml
 
+[![Build Status](https://travis-ci.org/phac-nml/irida-wf-ga2xml.svg?branch=master)](https://travis-ci.org/phac-nml/irida-wf-ga2xml)
+
 Create an IRIDA XML workflow description from a Galaxy workflow ga JSON file. 
 
 ## Installation
 
 - Java 1.8 must be installed 
-- Download latest standalone release of `irida-wf-ga2xml` 
+- Download [latest standalone release of `irida-wf-ga2xml`](https://github.com/phac-nml/irida-wf-ga2xml/releases)
 
 ## Usage
 
