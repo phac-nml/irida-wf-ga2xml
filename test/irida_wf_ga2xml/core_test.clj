@@ -5,6 +5,7 @@
     [irida-wf-ga2xml.messages :as msgs]
     [irida-wf-ga2xml.core :refer [get-step-outputs
                                   tool-params-vec
+                                  tool-params-map
                                   to-wf-vec]]
     [irida-wf-ga2xml.util :refer [vec->indented-xml
                                   tool-steps
@@ -285,13 +286,15 @@
 (deftest outputs-from-workflow-step
   (testing "Getting outputs for FLASH step in SISTR from reads workflow"
     (is (= (vec (get-step-outputs sistr-flash-step))
+           [[:output {:name "flash.log", :fileName "flash.log"}]]))
+    (is (= (vec (get-step-outputs sistr-flash-step :remove-file-ext? true))
            [[:output {:name "flash", :fileName "flash.log"}]])))
   (testing "Getting outputs for sistr_cmd step"
     (is (= (vec (get-step-outputs sistr-cmd-step))
-           [[:output {:name "sistr-alleles-out", :fileName "sistr-alleles-out.json"}]
-            [:output {:name "sistr-cgmlst-profiles", :fileName "sistr-cgmlst-profiles.csv"}]
-            [:output {:name "sistr-novel-alleles", :fileName "sistr-novel-alleles.fasta"}]
-            [:output {:name "sistr-predictions", :fileName "sistr-predictions.json"}]]))))
+           [[:output {:name "sistr-alleles-out.json", :fileName "sistr-alleles-out.json"}]
+            [:output {:name "sistr-cgmlst-profiles.csv", :fileName "sistr-cgmlst-profiles.csv"}]
+            [:output {:name "sistr-novel-alleles.fasta", :fileName "sistr-novel-alleles.fasta"}]
+            [:output {:name "sistr-predictions.json", :fileName "sistr-predictions.json"}]]))))
 
 (deftest parse-tool-shed-repo-info
   (testing "Parsing of Galaxy workflow step for tool toolshed repository information"

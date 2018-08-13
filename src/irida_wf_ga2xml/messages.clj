@@ -7,10 +7,13 @@
     [clojure.zip :as zip :refer [children xml-zip]]
     [clojure.data.xml :as xml]
     [clojure.data.zip.xml :as zip-xml :refer [xml-> attr]]
-    [clojure.java.io :as io])
+    [clojure.java.io :as io]
+    [taoensso.timbre :as timbre
+     :refer [log trace debug info warn error fatal report
+             logf tracef debugf infof warnf errorf fatalf reportf
+             spy get-env]])
   (:import
-    [java.util Properties Map ArrayList]
-    [java.io File]
+    [java.util Properties Map]
     (clojure.lang PersistentVector)))
 
 (defn get-repo-info
@@ -71,7 +74,7 @@
       zip/xml-zip))
 
 (defn name-kw
-  "Get an XML `node` element's :name attribute as a keyword."
+  "Get an XML `node` element's `:name` attribute as a keyword."
   [node]
   (keyword (attr node :name)))
 
@@ -101,14 +104,14 @@
    :type_of_scheme {:scheme_type \"select\", :scheme_input \"data\"}}
   ```
   "
-  [zipper & {:keys [tag-search get-attr]
+  [zipper & {:keys [tag-search attrs]
              :or   {tag-search [:tool :inputs]
-                    get-attr   :label}}]
+                    attrs      :label}}]
   (letfn [(descend-children [el] (into {} (->>
                                             (for [x (children el)]
                                               (if (= (class x) String)
                                                 nil
-                                                (get-param-values (xml-zip x) :tag-search [] :get-attr get-attr)))
+                                                (get-param-values (xml-zip x) :tag-search [] :attrs attrs)))
                                             (remove nil?)
                                             (flatten))))
           (iter-non-param-elements [tag-kw]
@@ -118,7 +121,7 @@
     (let [zippart (partial xml-> zipper)
           params (for [param (apply zippart (conj tag-search :param))]
                    {(name-kw param)
-                    (attr param get-attr)})
+                    (attr param attrs)})
           sections (iter-non-param-elements :section)
           conditionals (iter-non-param-elements :conditional)]
       (into {} (concat params sections conditionals)))))
@@ -151,47 +154,55 @@
        (into {})))
 
 (defn repo-info->param-attr-map
-  [repo-info & {:keys [get-attr]
-                :or   {get-attr :label}}]
+  [repo-info & {:keys [attrs]
+                :or   {attrs [:label :type]}}]
   (let [zipper (->> repo-info
                     (get-toolshed-browse-html)
                     (xml-filename)
                     (raw-file-xml-url repo-info)
                     (xml-url->zipper))]
-    (-> zipper
-        (get-param-values :get-attr get-attr)
-        (flatten-param-values-map))))
+    (into {} (map
+               (fn [attr]
+                 {attr
+                  (-> zipper
+                      (get-param-values :attrs attr)
+                      (flatten-param-values-map))})
+               attrs))))
 
 (defn tool-step->param-attr-map
-  [tool-step & {:keys [get-attr]
-                :or   {get-attr :label}}]
-  (repo-info->param-attr-map (get-repo-info tool-step)))
+  [tool-step & {:keys [attrs]
+                :or   {attrs [:label :type]}}]
+  (repo-info->param-attr-map (get-repo-info tool-step) :attrs attrs))
 
 (defn tool-param-properties-key
   [tool-name step-id [param-name param-label]]
   [(util/parameter-name tool-name step-id param-name)
    param-label])
 
-(defn get-tool-param-messages
-  "Given a tool `step`, get the tool param label messages from the Galaxy tool
+(defn get-tool-param-values
+  "Given a tool `step`, get the tool param attribute values from the Galaxy tool
   XML file param key names specified in `param-names`.
-  Returns a map of `{:props {:param-key \"param label value\" ...}}`"
-  [step param-names]
+  Returns a map of `{:props {:label {:param-key \"param label value\" ...}}`"
+  [step param-names & {:keys [attrs] :or {attrs [:label :type]}}]
   (let [{:strs [tool_id id]} step
-        label-map (tool-step->param-attr-map step)
+        attrs-map (tool-step->param-attr-map step :attrs attrs)
         repo-info (get-repo-info step)
         {:keys [name]} repo-info
         label-map-prop-keys (into {} (map #(tool-param-properties-key
-                                             (if name name tool_id)
+                                             (if name
+                                               name
+                                               tool_id)
                                              id
                                              %)
-                                          label-map))
+                                          (:label attrs-map)))
         param-names (map #(util/parameter-name (if name name tool_id) id %) param-names)]
     {:props (->> param-names
-                 (map #(find label-map-prop-keys %))
+                 (map #(if-let [found (find label-map-prop-keys %)]
+                         found
+                         [% ""]))
                  (remove nil?)
-                 (into {}))}))
-
+                 (into {}))
+     :attrs attrs-map}))
 
 (defn default-workflow-messages [name analysis-type description]
   {(str "workflow." analysis-type ".title")       (str name " Pipeline")
@@ -215,12 +226,22 @@
 
 
 (defn ^Properties map->properties
+  "Map to Properties object"
   [^Map m]
   (let [p (Properties.)]
     (doseq [[k v] m]
       (.setProperty p (name (str k)) (str v)))
     p))
 
+(defn msg-key->tool-step-number-map
+  "Given a messages Properties `prop-key` return a map of `:tool` name and workflow `:step-number`"
+  [prop-key]
+  (let [tool-step-param-str (->> (clojure.string/split prop-key #"\.")
+                                 (drop 3)
+                                 (first))
+        [tool step-number _] (clojure.string/split tool-step-param-str #"-")]
+    {:tool        tool
+     :step-number step-number}))
 
 (defn write-props
   "Write workflow info and tool parameter properties to an `outfile`.
@@ -232,5 +253,9 @@
   (with-open [w (io/writer outfile)]
     (.store (map->properties main-props) w "Pipeline Info Properties"))
   (doseq [m tool-param-props]
-    (with-open [w (io/writer outfile :append true)]
-      (.store (map->properties m) w (str "Tool Parameters - " (first (keys m)))))))
+    (let [{:keys [tool step-number]} (->> m
+                                          (keys)
+                                          (first)
+                                          (msg-key->tool-step-number-map))]
+      (with-open [w (io/writer outfile :append true)]
+        (.store (map->properties m) w (str "Tool Parameters - Tool: " tool " - Workflow Step #: " step-number))))))
