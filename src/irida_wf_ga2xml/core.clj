@@ -117,7 +117,8 @@
   (let [ga-map (parse-ga path)
         {:strs [name annotation]} ga-map
         _ (info (str "Parsed Galaxy workflow file with name='" name "' and annotation/description='" annotation "'"))
-        name (if wf-name wf-name name)
+        name (safe-workflow-name (if wf-name wf-name name))
+        _ (info (str "Using worklfow name='" name "'"))
         input (input-steps ga-map)
         _ (info (count input) "input steps in workflow")
         steps (tool-steps ga-map)
@@ -127,7 +128,8 @@
                                                     :get-param-labels? output-messages?
                                                     :extra-tool-param-attrs? extra-tool-param-attrs?))
                              (filter not-empty))
-        out {:xml-vec
+        out {:name name
+             :xml-vec
              [:iridaWorkflow
               [:id (uuid)]
               [:name name]

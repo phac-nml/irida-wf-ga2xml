@@ -110,7 +110,7 @@
             _ (trace "irida-wf-map: " irida-wf-map)
             xml-str (vec->indented-xml (:xml-vec irida-wf-map))]
         (if outdir
-          (let [file-with-base (partial io/file outdir workflow-name workflow-version)
+          (let [file-with-base (partial io/file outdir (:name irida-wf-map) workflow-version)
                 irida-xml-filename (.toString (file-with-base "irida_workflow.xml"))
                 ga-file-dest (.toString (file-with-base "irida_workflow_structure.ga"))]
             (io/make-parents irida-xml-filename)

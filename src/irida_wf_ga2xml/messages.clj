@@ -156,18 +156,22 @@
 (defn repo-info->param-attr-map
   [repo-info & {:keys [attrs]
                 :or   {attrs [:label :type]}}]
-  (let [zipper (->> repo-info
-                    (get-toolshed-browse-html)
-                    (xml-filename)
-                    (raw-file-xml-url repo-info)
-                    (xml-url->zipper))]
-    (into {} (map
-               (fn [attr]
-                 {attr
-                  (-> zipper
-                      (get-param-values :attrs attr)
-                      (flatten-param-values-map))})
-               attrs))))
+  (try
+    (let [zipper (->> repo-info
+                      (get-toolshed-browse-html)
+                      (xml-filename)
+                      (raw-file-xml-url repo-info)
+                      (xml-url->zipper))]
+      (into {} (map
+                 (fn [attr]
+                   {attr
+                    (-> zipper
+                        (get-param-values :attrs attr)
+                        (flatten-param-values-map))})
+                 attrs)))
+    (catch Exception e
+      (error "Could not get tool parameter attribute info for" repo-info "; Encountered error:" e)
+      nil)))
 
 (defn tool-step->param-attr-map
   [tool-step & {:keys [attrs]

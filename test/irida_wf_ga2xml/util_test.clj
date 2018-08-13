@@ -27,6 +27,12 @@
   (is (= (vcons :this [[:a] [:b] [:c]])
          [:this [:a] [:b] [:c]])))
 
+(deftest make-safe-workflow-name
+  (is (= (safe-workflow-name "Some \t Crazy *&(^($*!@ Workflow     Name")
+         "SomeCrazyWorkflowName")
+      (= (safe-workflow-name "SISTR Analyze Reads v0.2")
+         "SISTRAnalyzeReadsv02")))
+
 (deftest x-in-coll
   (is (in? [1 2 3] 2))
   (is (in? ["a" "b" "c"] "c"))

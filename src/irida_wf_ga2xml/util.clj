@@ -36,6 +36,14 @@
     Keyword (->> (str kw) vec rest (apply str))
     (throw (IllegalArgumentException. (str "Arg 'kw' is not a Clojure Keyword! class=" (class kw))))))
 
+(defn safe-workflow-name
+  "Remove whitespace and other troublesome characters from the workflow name.
+  `wf-name` is the workflow name to make safe.
+  `repl` is the replacement character/string.
+  Returns a safe formatted workflow name."
+  [wf-name & {:keys [repl] :or {repl ""}}]
+  (clojure.string/replace wf-name #"[^\w\-]+" repl))
+
 (defn dundered?
   "Is `x` wrapped in double underscores?"
   [x]
