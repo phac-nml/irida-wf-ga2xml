@@ -37,12 +37,13 @@ Execute standalone JAR with `java`:
 
 ## Examples
 
-    $ java -jar target/uberjar/irida-wf-ga2xml-0.1.0-SNAPSHOT-standalone.jar \
+    $ java -jar irida-wf-ga2xml-1.0.0-SNAPSHOT-standalone.jar \
         -t phylogenomics \ 
         -W 1.0.1 \ 
         -m \
         -i test/data/snvphyl-1.0.1-workflow.ga \
-        -n snvphyl > snvphyl-wf.xml
+        -n snvphyl
+        -o /tmp
 
 Output:
 
