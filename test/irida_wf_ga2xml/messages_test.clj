@@ -144,15 +144,89 @@
          (repo-info->param-attr-map biohansel-repo-info))))
 
 (deftest build-messages-map
-  (let [default-msgs (default-workflow-messages "biohansel" "biohansel" "Hansel?")]
-    (is (= {"workflow.biohansel.title"                  "biohansel Pipeline",
-            "workflow.biohansel.description"            "Hansel?",
-            "pipeline.title.biohansel"                  "Pipelines - biohansel",
-            "pipeline.h1.biohansel"                     "biohansel Pipeline",
-            "pipeline.parameters.modal-title.biohansel" "biohansel Pipeline Parameters"}
+  (let [default-msgs (default-workflow-messages "AssemblyAnnotation" "asm_annt" "Assembles and Annotates")]
+    (is (= {"workflow.asm_annt.title"                            "AssemblyAnnotation Pipeline",
+            "workflow.asm_annt.description"                      "Assembles and Annotates",
+            "pipeline.title.AssemblyAnnotation"                  "Pipelines - AssemblyAnnotation",
+            "pipeline.h1.AssemblyAnnotation"                     "AssemblyAnnotation Pipeline",
+            "pipeline.parameters.modal-title.assemblyannotation" "AssemblyAnnotation Pipeline Parameters"}
            default-msgs))))
 
 (deftest tool-step-info-from-messages-key
   (let [some-msg-key "pipeline.parameters.biohansel.bio_hansel-1-type_of_scheme.scheme_type"]
     (is (msg-key->tool-step-number-map some-msg-key)
         {:tool "bio_hansel", :step-number "1"})))
+
+(deftest construct-tool-param-properties-keys
+  (testing "The workflow name should be lowercase in the properties file tool param key names"
+    (let [wf-name "AssemblyAnnotation"
+          params {"prokka-6-evalue"                       "Similarity e-value cut-off"
+                  "filter_spades_repeats-4-print_summary" "Print out a summary of all the results?"
+                  "flash-1-max_overlap"                   "Maximum overlap",
+                  "spades-2-kmer_choice.auto_kmer_choice" "Automatically choose k-mer values"}
+          expected {"pipeline.parameters.assemblyannotation.prokka-6-evalue"                       "Similarity e-value cut-off"
+                    "pipeline.parameters.assemblyannotation.filter_spades_repeats-4-print_summary" "Print out a summary of all the results?"
+                    "pipeline.parameters.assemblyannotation.flash-1-max_overlap"                   "Maximum overlap",
+                    "pipeline.parameters.assemblyannotation.spades-2-kmer_choice.auto_kmer_choice" "Automatically choose k-mer values"}]
+      (is (= expected
+             (prepend-param-details wf-name params))))))
+
+
+(deftest finding-param-props
+  (testing "That a list of param keys can be found in a map of param keys to param values"
+    (let [params ["a" "b" "missing" "c"]
+          props {"a" "x"
+                 "b" "y"
+                 "c" "z"}
+          expected {"a"       "x"
+                    "b"       "y"
+                    "missing" "missing"
+                    "c"       "z"}]
+      (is (= expected
+             (find-param-props params props))))
+    (let [params ["a" "b" "c"]
+          props {"a" "x"
+                 "b" "y"
+                 "c" "z"}
+          expected {"a" "x"
+                    "b" "y"
+                    "c" "z"}]
+      (is (= expected
+             (find-param-props params props))))
+    (let [params ["a" "b" "c"]
+          props {}
+          expected {"a" "a"
+                    "b" "b"
+                    "c" "c"}]
+      (is (= expected
+             (find-param-props params props))))))
+
+(deftest construction-of-tool-param-props-map
+  (testing "That the tool param props map is constructed properly given a Galaxy tool XML attributes map, tool id and workflow step number"
+    (let [tool-id "prokka"
+          step-number 99
+          expected {"prokka-99-genus"                      "Genus name (--genus)",
+                    "prokka-99-species"                    "Species name (--species)",
+                    "prokka-99-gffver"                     "GFF version (--gffver)",
+                    "prokka-99-centre"                     "Sequencing centre ID (--centre)",
+                    "prokka-99-kingdom.kingdom_select"     "Kingdom (--kingdom)",
+                    "prokka-99-compliant.compliant_select" "Force GenBank/ENA/DDJB compliance (--compliant)",
+                    "prokka-99-increment"                  "Locus tag counter increment (--increment)",
+                    "prokka-99-evalue"                     "Similarity e-value cut-off",
+                    "prokka-99-locustag"                   "Locus tag prefix (--locustag)",
+                    "prokka-99-outputs"                    "Additional outputs",
+                    "prokka-99-kingdom.gcode"              "Genetic code (transl_table)",
+                    "prokka-99-fast"                       "Fast mode (--fast)",
+                    "prokka-99-usegenus"                   "Use genus-specific BLAST database (--usegenus)",
+                    "prokka-99-input"                      "Contigs to annotate",
+                    "prokka-99-plasmid"                    "Plasmid name or identifier (--plasmid)",
+                    "prokka-99-notrna"                     "Don't run tRNA search with Aragorn",
+                    "prokka-99-compliant.mincontig"        "Minimum contig size (--mincontiglen)",
+                    "prokka-99-proteins"                   "Optional FASTA file of trusted proteins to first annotate from (--proteins)",
+                    "prokka-99-norrna"                     "Don't run rRNA search with Barrnap",
+                    "prokka-99-metagenome"                 "Improve gene predictions for highly fragmented genomes (--metagenome)",
+                    "prokka-99-compliant.addgenes"         "Add 'gene' features for each 'CDS' feature (--addgenes)",
+                    "prokka-99-strain"                     "Strain name (--strain)",
+                    "prokka-99-rfam"                       "Enable searching for ncRNAs with Infernal+Rfam (SLOW!) (--rfam)"}]
+      (is (= expected
+             (tool-param-props tool-id step-number prokka-expected-param-attrs))))))

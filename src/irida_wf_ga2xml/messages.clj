@@ -8,6 +8,7 @@
     [clojure.data.xml :as xml]
     [clojure.data.zip.xml :as zip-xml :refer [xml-> attr]]
     [clojure.java.io :as io]
+    [clojure.string :as string]
     [taoensso.timbre :as timbre
      :refer [log trace debug info warn error fatal report
              logf tracef debugf infof warnf errorf fatalf reportf
@@ -174,14 +175,43 @@
       nil)))
 
 (defn tool-step->param-attr-map
+  "Given a Galaxy workflow `tool-step` map, get all tool param attributes from the Galaxy tool wrapper XML.
+  The tool repository info is extracted from the `tool-step` map and a vector of attribute keywords can be specified
+  to allow extraction of any XML attributes that one wants from the Galaxy tool XML `<param>` tags.
+  e.g `(tool-step->param-attr-map step :attrs [:label :type :whatever :you :want])`
+  Returns a map of with keys of each item in `attrs` to a map of tool param name to the tool param attr value."
   [tool-step & {:keys [attrs]
                 :or   {attrs [:label :type]}}]
   (repo-info->param-attr-map (get-repo-info tool-step) :attrs attrs))
 
 (defn tool-param-properties-key
+  "Return a key-value pair of expected tool param key to tool param label.
+  Key is constructed from the `tool-name`, `step-id` (or workflow step number) and tool `param-name`."
   [tool-name step-id [param-name param-label]]
   [(util/parameter-name tool-name step-id param-name)
    param-label])
+
+(defn tool-param-props
+  "Construct a map of tool param name keys to Galaxy tool param labels.
+   Takes a Galaxy `tool-id`, `wf-step-number` and a map of tool param attributes `attrs-map` to construct the output map.
+   `attrs-map` must a `:label` key which has a value that is a map of tool param names to label values."
+  [tool-id wf-step-number attrs-map]
+  (into {} (map #(tool-param-properties-key
+                   tool-id
+                   wf-step-number
+                   %)
+                (:label attrs-map))))
+
+(defn find-param-props
+  "Find the tool `params` in a `props` map of tool param names to labels.
+  If a tool param key is not found in `props`, the default value will be set to the tool param key."
+  [params props]
+  (->> params
+       (map #(if-let [found (find props %)]
+               found
+               [% %]))
+       (remove nil?)
+       (into {})))
 
 (defn get-tool-param-values
   "Given a tool `step`, get the tool param attribute values from the Galaxy tool
@@ -192,29 +222,21 @@
         attrs-map (tool-step->param-attr-map step :attrs attrs)
         repo-info (get-repo-info step)
         {:keys [name]} repo-info
-        label-map-prop-keys (into {} (map #(tool-param-properties-key
-                                             (if name
-                                               name
-                                               tool_id)
-                                             id
-                                             %)
-                                          (:label attrs-map)))
+        label-map-prop-keys (tool-param-props (if name
+                                                name
+                                                tool_id)
+                                              id
+                                              attrs-map)
         param-names (map #(util/parameter-name (if name name tool_id) id %) param-names)]
-    {:props (->> param-names
-                 (map #(if-let [found (find label-map-prop-keys %)]
-                         found
-                         [% ""]))
-                 (remove nil?)
-                 (into {}))
+    {:props (find-param-props param-names label-map-prop-keys)
      :attrs attrs-map}))
 
 (defn default-workflow-messages [name analysis-type description]
-  {(str "workflow." analysis-type ".title")       (str name " Pipeline")
-   (str "workflow." analysis-type ".description") description
-   (str "pipeline.title." name)                   (str "Pipelines - " name)
-   (str "pipeline.h1." name)                      (str name " Pipeline")
-   (str "pipeline.parameters.modal-title." name)  (str name " Pipeline Parameters")})
-
+  {(str "workflow." analysis-type ".title")                          (str name " Pipeline")
+   (str "workflow." analysis-type ".description")                    description
+   (str "pipeline.title." name)                                      (str "Pipelines - " name)
+   (str "pipeline.h1." name)                                         (str name " Pipeline")
+   (str "pipeline.parameters.modal-title." (string/lower-case name)) (str name " Pipeline Parameters")})
 
 (defn prepend-param-details
   "Prepend required tool parameter key prefixes for output to IRIDA compatible
@@ -224,10 +246,9 @@
   Returns a map of properties keys with proper prefixes."
   [wf-name props]
   (into {} (map (fn [[k v]]
-                  {(str "pipeline.parameters." wf-name "." k)
+                  {(str "pipeline.parameters." (string/lower-case wf-name) "." k)
                    v})
                 props)))
-
 
 (defn ^Properties map->properties
   "Map to Properties object"
@@ -240,10 +261,10 @@
 (defn msg-key->tool-step-number-map
   "Given a messages Properties `prop-key` return a map of `:tool` name and workflow `:step-number`"
   [prop-key]
-  (let [tool-step-param-str (->> (clojure.string/split prop-key #"\.")
+  (let [tool-step-param-str (->> (string/split prop-key #"\.")
                                  (drop 3)
                                  (first))
-        [tool step-number _] (clojure.string/split tool-step-param-str #"-")]
+        [tool step-number _] (string/split tool-step-param-str #"-")]
     {:tool        tool
      :step-number step-number}))
 
