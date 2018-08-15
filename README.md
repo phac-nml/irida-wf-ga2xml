@@ -86,7 +86,11 @@ Command-line for creating SNVPhyl v1.0.1 workflow files:
     1 directory, 3 files
 
 
+*Note: You may need to curate which tool parameters you want to keep in the `irida_workflow.xml` and `messages_en.properties` files as `irida-wf-ga2xml` will get all of them from the Galaxy workflow file.*
+
 **Contents of `messages_en.properties`:**
+
+*Note: You may need to update some of the messages in the `messages_en.properties` file.*
 
 ```properties
 #Pipeline Info Properties
@@ -209,6 +213,8 @@ pipeline.parameters.snvphyl.phyml-17-gamma_condition.categories=Number of catego
 
 
 **Contents of `irida_workflow.xml`:**
+
+*Note: You may need to remove some of the tool parameters from the `irida_workflow.xml` file.*
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
