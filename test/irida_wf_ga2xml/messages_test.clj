@@ -147,6 +147,7 @@
   (let [default-msgs (default-workflow-messages "AssemblyAnnotation" "asm_annt" "Assembles and Annotates")]
     (is (= {"workflow.asm_annt.title"                            "AssemblyAnnotation Pipeline",
             "workflow.asm_annt.description"                      "Assembles and Annotates",
+            "workflow.label.share-analysi-samples.asm_annt"      "Save Results to Project Line List Metadata",
             "pipeline.title.AssemblyAnnotation"                  "Pipelines - AssemblyAnnotation",
             "pipeline.h1.AssemblyAnnotation"                     "AssemblyAnnotation Pipeline",
             "pipeline.parameters.modal-title.assemblyannotation" "AssemblyAnnotation Pipeline Parameters"}
