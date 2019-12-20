@@ -78,6 +78,13 @@
   "Random UUID using Java stdlib function"
   [] (str (java.util.UUID/randomUUID)))
 
+(defn str->uuid
+  "Convert string to UUID, returns nil for invalid UUID"
+  [s]
+  (try
+    (java.util.UUID/fromString s)
+    (catch Exception e)))
+
 (defn rm-file-ext
   "Remove file extension from filename. 'filename.txt' -> 'filename'"
   [s]

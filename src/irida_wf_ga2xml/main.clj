@@ -3,7 +3,7 @@
     [clojure.tools.cli :refer [parse-opts]]
     [clojure.string :as s]
     [irida-wf-ga2xml.core :refer [to-wf-vec]]
-    [irida-wf-ga2xml.util :refer [vec->indented-xml]]
+    [irida-wf-ga2xml.util :refer [vec->indented-xml uuid str->uuid]]
     [irida-wf-ga2xml.messages :as msgs]
     [clojure.java.io :as io]
     [taoensso.timbre :as timbre
@@ -24,6 +24,9 @@
    ["-W" "--workflow-version WORKFLOW_VERSION" "Workflow version"
     :default "0.1.0"
     :validate [#(re-matches #"[\d\.]+" %) "Can only contain numbers and periods"]]
+   ["-u" "--uuid UUID" "Workflow UUID"
+    :default (uuid)
+    :validate #(uuid? (str->uuid %))]
    ["-o" "--outdir OUPUT_DIRECTORY"
     "Output directory; where to create the <workflow-name>/<workflow-version>/ directory structure and write the 'irida_workflow.xml', 'irida_workflow_structure.ga' and 'messages_en.properties' files"
     :default nil]
