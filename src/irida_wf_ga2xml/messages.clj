@@ -234,6 +234,7 @@
 (defn default-workflow-messages [name analysis-type description]
   {(str "workflow." analysis-type ".title")                          (str name " Pipeline")
    (str "workflow." analysis-type ".description")                    description
+   (str "workflow.label.share-analysis-samples." analysis-type)      "Save Results to Project Line List Metadata" 
    (str "pipeline.title." name)                                      (str "Pipelines - " name)
    (str "pipeline.h1." name)                                         (str name " Pipeline")
    (str "pipeline.parameters.modal-title." (string/lower-case name)) (str name " Pipeline Parameters")})
