@@ -24,8 +24,8 @@
    ["-W" "--workflow-version WORKFLOW_VERSION" "Workflow version"
     :default "0.1.0"
     :validate [#(re-matches #"[\d\.]+" %) "Can only contain numbers and periods"]]
-   ["-u" "--uuid UUID" "Workflow UUID"
-    :default (uuid)
+   ["-I" "--workflow-id UUID" "Workflow ID (UUID)"
+    :default nil
     :validate #(uuid? (str->uuid %))]
    ["-o" "--outdir OUPUT_DIRECTORY"
     "Output directory; where to create the <workflow-name>/<workflow-version>/ directory structure and write the 'irida_workflow.xml', 'irida_workflow_structure.ga' and 'messages_en.properties' files"
@@ -95,6 +95,7 @@
                     input
                     outdir
                     workflow-version
+                    workflow-id
                     multi-sample
                     workflow-name
                     extra-tool-param-attrs
@@ -104,6 +105,7 @@
             _ (trace "Options" options)
             _ (info "Parsing " input " Galaxy workflow file. Creating irida_workflow.xml with workflow name '" workflow-name "' and version '" workflow-version "'.")
             irida-wf-map (to-wf-vec input
+                                    :wf-id workflow-id
                                     :wf-version workflow-version
                                     :analysis-type analysis-type
                                     :single-sample? (not multi-sample)
