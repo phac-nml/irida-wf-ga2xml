@@ -25,7 +25,7 @@ Execute standalone JAR with `java`:
       -n, --workflow-name WORKFLOW_NAME                 Workflow name (default is to extract name from workflow input file)
       -t, --analysis-type ANALYSIS_TYPE        DEFAULT  IRIDA AnalysisType
       -W, --workflow-version WORKFLOW_VERSION  0.1.0    Workflow version
-      -I, --workflow-id WORKFLOW_ID                     Workflow ID (UUID)
+      -I, --workflow-id WORKFLOW_ID                     Workflow ID
       -o, --outdir OUPUT_DIRECTORY                      Output directory; where to create the <workflow-name>/<workflow-version>/ directory structure and write the 'irida_workflow.xml', 'irida_workflow_structure.ga' and 'messages_en.properties' files
       -m, --multi-sample                                Multiple sample workflow; not a single sample workflow
       -i, --input INPUT                                 Galaxy workflow ga JSON format file
@@ -41,7 +41,7 @@ Execute standalone JAR with `java`:
 - `-n`/`--workflow-name`: Workflow name to use in IRIDA workflow XML
 - `-t`/`--analysis-type`: IRIDA AnalysisType enum (e.g. "phylogenomics")
 - `-W`/`--workflow-version`: Galaxy workflow version number (e.g. "0.1.0")
-- `-I`/`--workflow-id`: Galaxy workflow id (UUID, e.g. "ece298c1-cd9d-4aad-a6ce-a366bd5cbb9a")
+- `-I`/`--workflow-id`: Galaxy workflow id (e.g. "ece298c1-cd9d-4aad-a6ce-a366bd5cbb9a")
 - `-m`: Flag for whether the workflow operates on multiple samples (e.g. SNVPhyl does use multiple samples to generate a phylogenetic tree; SISTR operates on single samples to produce an individual result for each sample)
 - `-i`/`--input`: Galaxy workflow specifiction file (e.g. `workflow.ga`); JSON format expected
 - `-o`/`--outdir`: Output directory; where to create the `<workflow-name>/<workflow-version>/` directory structure and write the `irida_workflow.xml`, `irida_workflow_structure.ga` and `messages_en.properties` files
