@@ -324,6 +324,14 @@
              :iridaWorkflow))
       (is (= (count wf)
              9))))
+  (testing "Parsing of basic sistr_cmd workflow with FASTA input and pre-defined workflow-id"
+    (let [wf (:xml-vec (to-wf-vec basic-wf-ga :output-messages? false :wf-id "86f71d8c-b43f-4131-a89b-7ca1fe3e44c2"))]
+      (is (= (first wf)
+             :iridaWorkflow))
+      (is (= (count wf)
+             9))
+      (is (= (get-in wf [1 1])
+           "86f71d8c-b43f-4131-a89b-7ca1fe3e44c2"))))
   (testing "Parsing of basic sistr_cmd workflow with FASTQ input"
     (let [wf (:xml-vec (to-wf-vec sistr-ga :output-messages? false))]
       (is (= (first wf)

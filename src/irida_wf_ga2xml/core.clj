@@ -104,6 +104,7 @@
                           ^String wf-version
                           ^String analysis-type
                           ^String wf-name
+                          ^String wf-id
                           ^Boolean output-messages?
                           ^Boolean extra-tool-param-attrs?
                           ^Boolean remove-output-name-file-ext?]
@@ -111,6 +112,7 @@
                           wf-version                   "0.1.0"
                           analysis-type                "DEFAULT"
                           wf-name                      nil
+                          wf-id                        (uuid)
                           output-messages?             true
                           extra-tool-param-attrs?      false
                           remove-output-name-file-ext? false}}]
@@ -131,7 +133,7 @@
         out {:name name
              :xml-vec
              [:iridaWorkflow
-              [:id (uuid)]
+              [:id wf-id]
               [:name name]
               [:version wf-version]
               [:analysisType analysis-type]
