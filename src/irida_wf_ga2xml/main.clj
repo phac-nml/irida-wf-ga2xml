@@ -2,12 +2,11 @@
   (:require
     [clojure.tools.cli :refer [parse-opts]]
     [clojure.string :as s]
-    [clojure.java.io]
-    [clojure.data.json :as json]
     [irida-wf-ga2xml.core :refer [to-wf-vec]]
     [irida-wf-ga2xml.util :refer [vec->indented-xml]]
     [irida-wf-ga2xml.messages :as msgs]
     [clojure.java.io :as io]
+    [cheshire.core :refer [decode generate-string]]
     [taoensso.timbre :as timbre
      :refer [log  trace  debug  info  warn  error  fatal  report
              logf tracef debugf infof warnf errorf fatalf reportf
@@ -123,7 +122,7 @@
             (io/make-parents ga-file-dest)
             (spit irida-xml-filename xml-str)
             (info "Wrote workflow XML to " irida-xml-filename)
-            (json/pprint (slurp input) (clojure.java.io/writer ga-file-dest))
+            (spit ga-file-dest (generate-string (decode (slurp input)) {:pretty true}))
             (info "Wrote Galaxy workflow *.ga file to " ga-file-dest)
             (if-let [[main-props tool-param-props] (:props irida-wf-map)]
               (let [msg-props-file (.toString (file-with-base "messages_en.properties"))]
