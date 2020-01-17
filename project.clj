@@ -8,7 +8,8 @@
                  [org.clojure/data.json "0.2.6"]
                  [org.clojure/data.xml "0.2.0-alpha5"]
                  [org.clojure/data.zip "0.1.2"]
-                 [com.taoensso/timbre "4.10.0"]]
+                 [com.taoensso/timbre "4.10.0"]
+                 [cheshire "5.9.0"]]
   :main ^:skip-aot irida-wf-ga2xml.main
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
