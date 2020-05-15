@@ -60,14 +60,14 @@
                   extra-tool-param-attrs?]
            :or   {get-param-labels?       true
                   extra-tool-param-attrs? false}}]
-  (let [{:strs [tool_id id]} step
+  (let [{:strs [tool_id id uuid]} step
         {:keys [name]} (tool-id->repo-info tool_id)
         params (tool-params-map step)
         param-attrs (if get-param-labels?
                       (msgs/get-tool-param-values step (keys params))
                       nil)
         xml-vec (vec (map (fn [[k v]]
-                            (let [base-attrs {:toolId        tool_id
+                            (let [base-attrs {:toolId        uuid
                                               :parameterName k}
                                   extra-attrs (if extra-tool-param-attrs?
                                                 (map (fn [x]

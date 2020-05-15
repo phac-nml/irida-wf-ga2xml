@@ -160,30 +160,30 @@
 (def sistr-cmd-step-new-tool-params
   [[:parameter
     {:name "sistr_cmd-1-keep_tmp", :defaultValue "false"}
-    [:toolParameter {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "keep_tmp"}]]
+    [:toolParameter {:toolId "7aa0fb20-be4c-4821-a60c-ba1e13a02ec9", :parameterName "keep_tmp"}]]
    [:parameter
     {:name "sistr_cmd-1-output_format", :defaultValue "json"}
     [:toolParameter
-     {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "output_format"}]]
+     {:toolId "7aa0fb20-be4c-4821-a60c-ba1e13a02ec9", :parameterName "output_format"}]]
    [:parameter
     {:name "sistr_cmd-1-run_mash", :defaultValue "true"}
-    [:toolParameter {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "run_mash"}]]
+    [:toolParameter {:toolId "7aa0fb20-be4c-4821-a60c-ba1e13a02ec9", :parameterName "run_mash"}]]
    [:parameter
     {:name "sistr_cmd-1-more_output", :defaultValue "-MM"}
-    [:toolParameter {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "more_output"}]]
+    [:toolParameter {:toolId "7aa0fb20-be4c-4821-a60c-ba1e13a02ec9", :parameterName "more_output"}]]
    [:parameter
     {:name "sistr_cmd-1-verbosity", :defaultValue "-vv"}
-    [:toolParameter {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "verbosity"}]]
+    [:toolParameter {:toolId "7aa0fb20-be4c-4821-a60c-ba1e13a02ec9", :parameterName "verbosity"}]]
    [:parameter
     {:name "sistr_cmd-1-use_full_cgmlst_db", :defaultValue "false"}
     [:toolParameter
-     {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "use_full_cgmlst_db"}]]
+     {:toolId "7aa0fb20-be4c-4821-a60c-ba1e13a02ec9", :parameterName "use_full_cgmlst_db"}]]
    [:parameter
     {:name "sistr_cmd-1-qc", :defaultValue "true"}
-    [:toolParameter {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "qc"}]]
+    [:toolParameter {:toolId "7aa0fb20-be4c-4821-a60c-ba1e13a02ec9", :parameterName "qc"}]]
    [:parameter
     {:name "sistr_cmd-1-no_cgmlst", :defaultValue "false"}
-    [:toolParameter {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "no_cgmlst"}]]])
+    [:toolParameter {:toolId "7aa0fb20-be4c-4821-a60c-ba1e13a02ec9", :parameterName "no_cgmlst"}]]])
 
 (def snvphyl-tool-steps (tool-steps (parse-ga snvphyl-ga)))
 
@@ -194,88 +194,88 @@
   [[:parameter
     {:name "freebayes-6-options_type.algorithmic_features.algorithmic_features_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.algorithmic_features.algorithmic_features_selector"}]]
    [:parameter
     {:name         "freebayes-6-options_type.population_mappability_priors.population_mappability_priors_selector",
      :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.population_mappability_priors.population_mappability_priors_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.reference_allele.reference_allele_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.reference_allele.reference_allele_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.T", :defaultValue "0.001"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.population_model.T"}]]
    [:parameter
     {:name "freebayes-6-options_type.input_filters.input_filters_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.input_filters.input_filters_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.population_model_selector", :defaultValue "True"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.population_model.population_model_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.optional_inputs.optional_inputs_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.optional_inputs.optional_inputs_selector"}]]
    [:parameter
     {:name "freebayes-6-reference_source.reference_source_selector", :defaultValue "history"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "reference_source.reference_source_selector"}]]
    [:parameter
     {:name "freebayes-6-target_limit_type.target_limit_type_selector", :defaultValue "do_not_limit"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "target_limit_type.target_limit_type_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.J", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.population_model.J"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.K", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.population_model.K"}]]
    [:parameter
     {:name "freebayes-6-options_type.genotype_likelihoods.genotype_likelihoods_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.genotype_likelihoods.genotype_likelihoods_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.O", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.O"}]]
    [:parameter
     {:name "freebayes-6-options_type.options_type_selector", :defaultValue "full"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.options_type_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.reporting.reporting_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.reporting.reporting_selector"}]]
    [:parameter
     {:name "freebayes-6-options_type.population_model.P", :defaultValue "1"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.population_model.P"}]]
    [:parameter
     {:name "freebayes-6-options_type.allele_scope.allele_scope_selector", :defaultValue "False"}
     [:toolParameter
-     {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
       :parameterName "options_type.allele_scope.allele_scope_selector"}]]])
 
 (deftest tool-shed-repo-info-from-tool-id
