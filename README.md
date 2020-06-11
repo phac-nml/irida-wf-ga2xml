@@ -31,7 +31,7 @@ Execute standalone JAR with `java`:
       -i, --input INPUT                                 Galaxy workflow ga JSON format file
       -x, --extra-tool-param-attrs                      Save extra toolParameter attributes ["label", "type"] to XML
           --remove-output-name-file-ext                 Remove file extension in workflow output names?
-      -u, --uuid-as-toolid                              Use UUID when building tool_ids, needed for workflows with duplicate tools.
+      -u, --use-tool-name-as-id                         Use tool names when building tool_ids, will not work with workflows that have multiple of the same tool
       -v, --verbosity                                   Verbosity level
       -V, --version                                     Display version
       -h, --help
@@ -48,7 +48,7 @@ Execute standalone JAR with `java`:
 - `-o`/`--outdir`: Output directory; where to create the `<workflow-name>/<workflow-version>/` directory structure and write the `irida_workflow.xml`, `irida_workflow_structure.ga` and `messages_en.properties` files
 - `-x`/`--extra-tool-param-attrs`: Save extra toolParameter attributes `["label", "type"]` to XML `toolParameter` tags
 - `--remove-output-name-file-ext`: Remove file extension in workflow output names? (default is to keep the extensions in the `<output>` tag names)
-- `-u`/`--uuid-as-toolid`: Use UUID when building tool_ids, needed for workflows with duplicate tools.
+- `-u`/`--use-tool-name-as-id`: Use tool names when building tool_ids, will not work with workflows that have multiple of the same tool.
 
 
 ## Getting started with Leiningen

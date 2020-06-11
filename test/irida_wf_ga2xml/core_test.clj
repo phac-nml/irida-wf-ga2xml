@@ -157,7 +157,7 @@
    "content_id"           "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2",
    "tool_id"              "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2"})
 
-(def sistr-cmd-step-new-tool-params
+(def sistr-cmd-step-new-tool-params-tool-name
   [[:parameter
     {:name "sistr_cmd-1-keep_tmp", :defaultValue "false"}
     [:toolParameter {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "keep_tmp"}]]
@@ -190,7 +190,7 @@
 (def snvphyl-freebayes-step (first (get (group-by #(get % "id") snvphyl-tool-steps) 6)))
 (def snvphyl-cat-step (first (get (group-by #(get % "id") snvphyl-tool-steps) 13)))
 
-(def snvphyl-freebayes-step-tool-params
+(def snvphyl-freebayes-step-tool-params-tool-name
   [[:parameter
     {:name "freebayes-6-options_type.algorithmic_features.algorithmic_features_selector", :defaultValue "False"}
     [:toolParameter
@@ -397,17 +397,17 @@
             [:-comment "WARNING: Latest revision fetched from https://toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd"]]))
     (is (nil? (util/tool-repo snvphyl-cat-step)))))
 
-(deftest parse-tool-params
+(deftest parse-tool-params-tool-name
   (testing "Parsing of sistr_cmd tool parameters."
-    (is (= (:xml-vec (tool-params-vec sistr-cmd-step-new :get-param-labels? false))
-           sistr-cmd-step-new-tool-params)))
+    (is (= (:xml-vec (tool-params-vec sistr-cmd-step-new :get-param-labels? false :use-tool-name-as-id? true))
+           sistr-cmd-step-new-tool-params-tool-name)))
   (testing "Parsing of SNVPhyl FreeBayes step deeply nested parameters."
-    (is (= (:xml-vec (tool-params-vec snvphyl-freebayes-step :get-param-labels? false))
-           snvphyl-freebayes-step-tool-params))))
+    (is (= (:xml-vec (tool-params-vec snvphyl-freebayes-step :get-param-labels? false :use-tool-name-as-id? true))
+           snvphyl-freebayes-step-tool-params-tool-name))))
 
 (deftest parse-tool-params-uuid
   (testing "Parsing of SNVPhyl FreeBayes with uuid instead of toolid."
-    (is (= (:xml-vec (tool-params-vec snvphyl-freebayes-step :get-param-labels? false :uuid-as-toolid? true))
+    (is (= (:xml-vec (tool-params-vec snvphyl-freebayes-step :get-param-labels? false))
             snvphyl-freebayes-step-tool-params-uuid))))
 
 (deftest workflow-to-vector

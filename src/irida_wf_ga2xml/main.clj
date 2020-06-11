@@ -34,7 +34,7 @@
    ["-i" "--input INPUT" "Galaxy workflow ga JSON format file"]
    ["-x" "--extra-tool-param-attrs" "Save extra toolParameter attributes [\"label\", \"type\"] to XML"]
    [nil "--remove-output-name-file-ext" "Remove file extension in workflow output names?"]
-   ["-u" "--uuid-as-toolid" "Use UUID when building tool_ids, needed for workflows with duplicate tools."]
+   ["-u" "--use-tool-name-as-id" "Use tool names when building tool_ids, will not work with workflows that have multiple of the same tool."]
    ["-v" "--verbosity" "Verbosity level"
     :id :verbosity
     :default 0
@@ -101,7 +101,7 @@
                     workflow-name
                     extra-tool-param-attrs
                     remove-output-name-file-ext
-                    uuid-as-toolid
+                    use-tool-name-as-id
                     verbosity]} options
             _ (timbre/set-level! (verbosity->logging-level verbosity))
             _ (trace "Options" options)
@@ -114,7 +114,7 @@
                                     :wf-name workflow-name
                                     :extra-tool-param-attrs? (boolean extra-tool-param-attrs)
                                     :remove-output-name-file-ext? (boolean remove-output-name-file-ext)
-                                    :uuid-as-toolid? (boolean uuid-as-toolid))
+                                    :use-tool-name-as-id? (boolean use-tool-name-as-id))
             _ (trace "irida-wf-map: " irida-wf-map)
             xml-str (vec->indented-xml (:xml-vec irida-wf-map))]
         (if outdir
