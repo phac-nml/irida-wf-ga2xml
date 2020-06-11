@@ -11,6 +11,27 @@ This JVM application creates a XML workflow description (`irida_structure.xml`) 
 - Java 1.8 must be installed 
 - Download [latest standalone release of `irida-wf-ga2xml`](https://github.com/phac-nml/irida-wf-ga2xml/releases)
 
+### Build from source
+
+Ensure that Java 1.8 (or higher), [Clojure] and [lein] are installed on your system. Clone this repo and use `lein` to build an uberjar file:
+
+```bash
+git clone https://github.com/phac-nml/irida-wf-ga2xml
+cd irida-wf-ga2xml
+# optionally, run tests 
+lein test
+# build uberjar
+lein uberjar
+```
+
+The uberjar files will be created in `target/uberjar/`.
+The standalone JAR file is likely the one you want to use and will have a filename like `irida-wf-ga2xml-1.1.0-SNAPSHOT-standalone.jar`.
+
+
+[Clojure]: https://www.clojure.org/guides/getting_started
+[lein]: https://leiningen.org/
+
+
 ## Usage
 
 Execute standalone JAR with `java`:
