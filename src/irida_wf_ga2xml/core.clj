@@ -57,17 +57,19 @@
   "Return a vector of all tool parameters for a workflow `step` in a format that will
   serialize into the expected IRIDA XML format for tool parameters."
   [step & {:keys [get-param-labels?
-                  extra-tool-param-attrs?]
+                  extra-tool-param-attrs?
+                  use-tool-name-as-id?]
            :or   {get-param-labels?       true
-                  extra-tool-param-attrs? false}}]
-  (let [{:strs [tool_id id]} step
+                  extra-tool-param-attrs? false
+                  use-tool-name-as-id?    false}}]
+  (let [{:strs [tool_id id uuid]} step
         {:keys [name]} (tool-id->repo-info tool_id)
         params (tool-params-map step)
         param-attrs (if get-param-labels?
                       (msgs/get-tool-param-values step (keys params))
                       nil)
         xml-vec (vec (map (fn [[k v]]
-                            (let [base-attrs {:toolId        tool_id
+                            (let [base-attrs {:toolId        (if use-tool-name-as-id? tool_id uuid)
                                               :parameterName k}
                                   extra-attrs (if extra-tool-param-attrs?
                                                 (map (fn [x]
@@ -107,7 +109,8 @@
                           ^String wf-id
                           ^Boolean output-messages?
                           ^Boolean extra-tool-param-attrs?
-                          ^Boolean remove-output-name-file-ext?]
+                          ^Boolean remove-output-name-file-ext?
+                          ^Boolean use-tool-name-as-id?]
                    :or   {single-sample?               true
                           wf-version                   "0.1.0"
                           analysis-type                "DEFAULT"
@@ -115,7 +118,8 @@
                           wf-id                        (uuid)
                           output-messages?             true
                           extra-tool-param-attrs?      false
-                          remove-output-name-file-ext? false}}]
+                          remove-output-name-file-ext? false
+                          use-tool-name-as-id?         false}}]
   (let [ga-map (parse-ga path)
         {:strs [name annotation]} ga-map
         _ (info (str "Parsed Galaxy workflow file with name='" name "' and annotation/description='" annotation "'"))
@@ -128,7 +132,8 @@
         parameters-maps (->> steps
                              (map #(tool-params-vec %
                                                     :get-param-labels? output-messages?
-                                                    :extra-tool-param-attrs? extra-tool-param-attrs?))
+                                                    :extra-tool-param-attrs? extra-tool-param-attrs?
+                                                    :use-tool-name-as-id? use-tool-name-as-id?))
                              (filter not-empty))
         out {:name name
              :xml-vec

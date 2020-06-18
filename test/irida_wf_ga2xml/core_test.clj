@@ -157,7 +157,7 @@
    "content_id"           "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2",
    "tool_id"              "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2"})
 
-(def sistr-cmd-step-new-tool-params
+(def sistr-cmd-step-new-tool-params-tool-name
   [[:parameter
     {:name "sistr_cmd-1-keep_tmp", :defaultValue "false"}
     [:toolParameter {:toolId "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2", :parameterName "keep_tmp"}]]
@@ -190,7 +190,7 @@
 (def snvphyl-freebayes-step (first (get (group-by #(get % "id") snvphyl-tool-steps) 6)))
 (def snvphyl-cat-step (first (get (group-by #(get % "id") snvphyl-tool-steps) 13)))
 
-(def snvphyl-freebayes-step-tool-params
+(def snvphyl-freebayes-step-tool-params-tool-name
   [[:parameter
     {:name "freebayes-6-options_type.algorithmic_features.algorithmic_features_selector", :defaultValue "False"}
     [:toolParameter
@@ -278,6 +278,94 @@
      {:toolId        "irida.corefacility.ca/galaxy-shed/repos/devteam/freebayes/freebayes/0.4.1",
       :parameterName "options_type.allele_scope.allele_scope_selector"}]]])
 
+(def snvphyl-freebayes-step-tool-params-uuid
+  [[:parameter
+    {:name "freebayes-6-options_type.algorithmic_features.algorithmic_features_selector", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.algorithmic_features.algorithmic_features_selector"}]]
+   [:parameter
+    {:name         "freebayes-6-options_type.population_mappability_priors.population_mappability_priors_selector",
+     :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.population_mappability_priors.population_mappability_priors_selector"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.reference_allele.reference_allele_selector", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.reference_allele.reference_allele_selector"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.population_model.T", :defaultValue "0.001"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.population_model.T"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.input_filters.input_filters_selector", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.input_filters.input_filters_selector"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.population_model.population_model_selector", :defaultValue "True"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.population_model.population_model_selector"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.optional_inputs.optional_inputs_selector", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.optional_inputs.optional_inputs_selector"}]]
+   [:parameter
+    {:name "freebayes-6-reference_source.reference_source_selector", :defaultValue "history"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "reference_source.reference_source_selector"}]]
+   [:parameter
+    {:name "freebayes-6-target_limit_type.target_limit_type_selector", :defaultValue "do_not_limit"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "target_limit_type.target_limit_type_selector"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.population_model.J", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.population_model.J"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.population_model.K", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.population_model.K"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.genotype_likelihoods.genotype_likelihoods_selector", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.genotype_likelihoods.genotype_likelihoods_selector"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.O", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.O"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.options_type_selector", :defaultValue "full"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.options_type_selector"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.reporting.reporting_selector", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.reporting.reporting_selector"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.population_model.P", :defaultValue "1"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.population_model.P"}]]
+   [:parameter
+    {:name "freebayes-6-options_type.allele_scope.allele_scope_selector", :defaultValue "False"}
+    [:toolParameter
+     {:toolId        "880cb192-d299-4736-af89-2b0df9977514",
+      :parameterName "options_type.allele_scope.allele_scope_selector"}]]])
+
 (deftest tool-shed-repo-info-from-tool-id
   (testing "Parsing of tool shed url, owner, tool name from tool id"
     (is (= (util/tool-id->repo-info "toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd/sistr_cmd/1.0.2")
@@ -309,13 +397,18 @@
             [:-comment "WARNING: Latest revision fetched from https://toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd"]]))
     (is (nil? (util/tool-repo snvphyl-cat-step)))))
 
-(deftest parse-tool-params
+(deftest parse-tool-params-tool-name
   (testing "Parsing of sistr_cmd tool parameters."
-    (is (= (:xml-vec (tool-params-vec sistr-cmd-step-new :get-param-labels? false))
-           sistr-cmd-step-new-tool-params)))
+    (is (= (:xml-vec (tool-params-vec sistr-cmd-step-new :get-param-labels? false :use-tool-name-as-id? true))
+           sistr-cmd-step-new-tool-params-tool-name)))
   (testing "Parsing of SNVPhyl FreeBayes step deeply nested parameters."
+    (is (= (:xml-vec (tool-params-vec snvphyl-freebayes-step :get-param-labels? false :use-tool-name-as-id? true))
+           snvphyl-freebayes-step-tool-params-tool-name))))
+
+(deftest parse-tool-params-uuid
+  (testing "Parsing of SNVPhyl FreeBayes with uuid instead of toolid."
     (is (= (:xml-vec (tool-params-vec snvphyl-freebayes-step :get-param-labels? false))
-           snvphyl-freebayes-step-tool-params))))
+            snvphyl-freebayes-step-tool-params-uuid))))
 
 (deftest workflow-to-vector
   (testing "Parsing of basic sistr_cmd workflow with FASTA input"
@@ -370,3 +463,4 @@
   (let [flash-shed-info (util/tool-repo sistr-flash-step)]
     (is (= (vec->indented-xml flash-shed-info)
            sistr-flash-step-repo-xml))))
+
