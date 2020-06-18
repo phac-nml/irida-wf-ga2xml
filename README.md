@@ -11,6 +11,27 @@ This JVM application creates a XML workflow description (`irida_structure.xml`) 
 - Java 1.8 must be installed 
 - Download [latest standalone release of `irida-wf-ga2xml`](https://github.com/phac-nml/irida-wf-ga2xml/releases)
 
+### Build from source
+
+Ensure that Java 1.8 (or higher), [Clojure] and [lein] are installed on your system. Clone this repo and use `lein` to build an uberjar file:
+
+```bash
+git clone https://github.com/phac-nml/irida-wf-ga2xml
+cd irida-wf-ga2xml
+# optionally, run tests
+lein test
+# build uberjar
+lein uberjar
+# run the application
+lein run project.clj --input my_workflow.ga --outdir output_directory/
+```
+
+The uberjar files will be created in `target/uberjar/`.
+The standalone JAR file is likely the one you want to use and will have a filename like `irida-wf-ga2xml-1.1.0-SNAPSHOT-standalone.jar`.
+
+[Clojure]: https://www.clojure.org/guides/getting_started
+[lein]: https://leiningen.org/
+
 ## Usage
 
 Execute standalone JAR with `java`:
@@ -49,20 +70,6 @@ Execute standalone JAR with `java`:
 - `-x`/`--extra-tool-param-attrs`: Save extra toolParameter attributes `["label", "type"]` to XML `toolParameter` tags
 - `--remove-output-name-file-ext`: Remove file extension in workflow output names? (default is to keep the extensions in the `<output>` tag names)
 - `-u`/`--use-tool-name-as-id`: Use tool names when building tool_ids, will not work with workflows that have multiple of the same tool.
-
-
-## Getting started with Leiningen
-
-Make sure you have the latest version of Leiningen downloaded. Instructions available here: https://leiningen.org/
-
-You can run the project using Leiningen with the following example:
-
-`lein run project.clj --input my_workflow.ga --outdir output_directory/`
-
-You can run the test suite with the following command:
-
-`lein test`
-
 
 ## Examples
 
