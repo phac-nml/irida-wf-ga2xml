@@ -89,10 +89,6 @@
     (is (= (galaxy-shed-url tool-id :https? false)
            "http://toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd"))))
 
-(deftest get-galaxy-tool-changeset-revision-from-url
-  (is (= (revision-from-url "https://toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd")
-         "5c8ff92e38a9")))
-
 (deftest get-tool-steps
   (testing "Getting the tool steps of a Galaxy workflow"
     (let [wf (parse-ga snvphyl-ga)

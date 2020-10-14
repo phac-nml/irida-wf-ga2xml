@@ -384,19 +384,6 @@
             [:output {:name "sistr-novel-alleles.fasta", :fileName "sistr-novel-alleles.fasta"}]
             [:output {:name "sistr-predictions.json", :fileName "sistr-predictions.json"}]]))))
 
-(deftest parse-tool-shed-repo-info
-  (testing "Parsing of Galaxy workflow step for tool toolshed repository information"
-    (is (= (util/tool-repo sistr-cmd-step-new)
-           [:repository [:name "sistr_cmd"] [:owner "nml"] [:url "https://toolshed.g2.bx.psu.edu"] [:revision "5c8ff92e38a9"]]))
-    (is (= (util/tool-repo sistr-cmd-step)
-           [:repository
-            [:name "sistr_cmd"]
-            [:owner "nml"]
-            [:url "https://toolshed.g2.bx.psu.edu"]
-            [:revision "5c8ff92e38a9"]
-            [:-comment "WARNING: Latest revision fetched from https://toolshed.g2.bx.psu.edu/repos/nml/sistr_cmd"]]))
-    (is (nil? (util/tool-repo snvphyl-cat-step)))))
-
 (deftest parse-tool-params-tool-name
   (testing "Parsing of sistr_cmd tool parameters."
     (is (= (:xml-vec (tool-params-vec sistr-cmd-step-new :get-param-labels? false :use-tool-name-as-id? true))
