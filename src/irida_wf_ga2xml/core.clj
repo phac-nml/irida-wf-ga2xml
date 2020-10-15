@@ -115,7 +115,7 @@
                           wf-version                   "0.1.0"
                           analysis-type                "DEFAULT"
                           wf-name                      nil
-                          wf-id                        (uuid)
+                          wf-id                        (rand-uuid)
                           output-messages?             true
                           extra-tool-param-attrs?      false
                           remove-output-name-file-ext? false

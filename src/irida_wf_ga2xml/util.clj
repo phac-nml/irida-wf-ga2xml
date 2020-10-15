@@ -74,7 +74,7 @@
          (remove (fn [[k _]] (dundered? k)) x))
     {prev-key x}))
 
-(defn uuid
+(defn rand-uuid
   "Random UUID using Java stdlib function"
   [] (str (java.util.UUID/randomUUID)))
 
