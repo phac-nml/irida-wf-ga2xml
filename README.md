@@ -8,7 +8,7 @@ This JVM application creates a XML workflow description (`irida_structure.xml`) 
 
 ## Installation
 
-- Java 1.8 must be installed 
+- Java 1.8+ must be installed 
 - Download [latest standalone release of `irida-wf-ga2xml`](https://github.com/phac-nml/irida-wf-ga2xml/releases)
 
 ### Build from source
