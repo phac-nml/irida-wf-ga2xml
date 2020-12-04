@@ -1,6 +1,6 @@
 # irida-wf-ga2xml
 
-[![Build Status](https://travis-ci.org/phac-nml/irida-wf-ga2xml.svg?branch=master)](https://travis-ci.org/phac-nml/irida-wf-ga2xml)
+[![Integration Tests](https://github.com/phac-nml/irida-wf-ga2xml/workflows/Integration%20Tests/badge.svg?branch=master&event=schedule)](https://github.com/phac-nml/irida-wf-ga2xml/actions?query=branch%3Amaster)
 
 Create an IRIDA workflow from a Galaxy workflow file.
 
