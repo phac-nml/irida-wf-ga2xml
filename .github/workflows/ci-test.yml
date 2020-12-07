@@ -1,0 +1,22 @@
+# Run tests
+
+name: Integration Tests
+
+on:
+  pull_request: # Run on all pull requests
+  push:
+    branches: master
+  schedule:     # Run weekly on master
+    - cron: 0 2 * * 1
+      branches: master
+
+jobs:
+  build-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2 #Checkout the project from git
+      - name: Install dependencies
+        run: lein deps
+      - name: Run tests
+        run: lein test
