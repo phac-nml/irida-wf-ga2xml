@@ -119,10 +119,12 @@
 
 (defn step-input-name-reference?
   "Is workflow step reference input file for a workflow that requires a reference file? (e.g. SNVPhyl)"
-  [{:strs [tool_state]}]
-  (let [tool_state (json/read-str tool_state)
+  [{:strs [tool_state name label]}]
+  (or (= name "reference")
+      (= label "reference")
+      (let [tool_state (json/read-str tool_state)
         {:strs [name]} tool_state]
-    (= name "reference")))
+        (= name "reference"))))
 
 (defn input-steps
   "Get \"data_input\"/\"data_collection_input\" type workflow steps.
