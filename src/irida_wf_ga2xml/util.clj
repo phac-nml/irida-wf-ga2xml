@@ -171,10 +171,10 @@
 
 (defn input-name
   "Name attribute of an input step from 'tool_state' map."
-  [{:strs [tool_state]}]
+  [{:strs [tool_state label]}]
   (let [tool_state (json/read-str tool_state)
         {:strs [name]} tool_state]
-    name))
+    (if (nil? name) label name)))
 
 (defn parameter-name
   "IRIDA workflow XML tool parameter name.
