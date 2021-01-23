@@ -21,10 +21,21 @@
     (.init sc nil cert-manager (java.security.SecureRandom.))
     (.setSSLSocketFactory conn (.getSocketFactory sc))))
 
+(defn read_all_bytes [input_stream]
+  (let [buffer_size 16384]
+    (loop [buffer (byte-array buffer_size)
+           bytes_read (.read input_stream buffer)
+           text (apply str (map #(char (bit-and % 255)) (filter #(> % 0) buffer)))]
+      (if (= bytes_read -1)
+        text
+        (recur (byte-array buffer_size)
+               (.read input_stream buffer)
+               (str text (apply str (map #(char (bit-and % 255)) (filter #(> % 0) buffer)))))))))
+
 (defn slurp-nocheck-sslcert [url] ; this is a replacement for the Clojure slurp function that doesn't check SSL certficates
   (let [conn (.openConnection (java.net.URL. url))]
     (set-socket-factory conn)
-    (String. (.readAllBytes (.getInputStream conn)))))
+    (read_all_bytes (.getInputStream conn))))
 
 (def tool-id-repos-pattern (re-pattern "/repos/"))
 (def slash-pattern (re-pattern "/"))
