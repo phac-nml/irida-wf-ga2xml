@@ -128,9 +128,6 @@
           conditionals (iter-non-param-elements :conditional)]
       (into {} (concat params sections conditionals)))))
 
-
-
-
 (defn flatten-param-values-map
   "Flatten a nested tool param values map.
 
