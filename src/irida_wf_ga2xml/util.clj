@@ -32,9 +32,10 @@
                (.read input_stream buffer)
                (str text (apply str (map #(char (bit-and % 255)) (filter #(> % 0) buffer)))))))))
 
-(defn slurp-nocheck-sslcert [url] ; this is a replacement for the Clojure slurp function that doesn't check SSL certficates
-  (let [conn (.openConnection (java.net.URL. url))]
-    (set-socket-factory conn)
+(defn slurp-nocheck-sslcert [url] ; this is a replacement for the Clojure slurp function 
+  (let [conn (.openConnection (java.net.URL. url))] 
+    (if (.contains url "://irida.corefacility.ca") ; this ignores SSL certificate errors only for host irida.corefacility.ca
+      (set-socket-factory conn))
     (read_all_bytes (.getInputStream conn))))
 
 (def tool-id-repos-pattern (re-pattern "/repos/"))
