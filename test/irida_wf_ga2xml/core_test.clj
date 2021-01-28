@@ -57,9 +57,9 @@
                         "RenameDatasetActionlog_file"       {"action_arguments" {"newname" "flash.log"},
                                                              "action_type"      "RenameDatasetAction",
                                                              "output_name"      "log_file"}},
-   "tool_id"           "irida.corefacility.ca/galaxy-shed/repos/irida/flash/FLASH/1.3.0"})
+   "tool_id"           "testtoolshed.g2.bx.psu.edu/repos/aaronpetkau/flash/FLASH/1.3.0"})
 
-(def sistr-flash-step-repo-xml "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<repository>\n  <name>flash</name>\n  <owner>irida</owner>\n  <url>https://irida.corefacility.ca/galaxy-shed</url>\n  <revision>4287dd541327</revision>\n  <!--WARNING: Latest revision fetched from https://irida.corefacility.ca/galaxy-shed/repos/irida/flash-->\n</repository>\n")
+(def sistr-flash-step-repo-xml "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<repository>\n  <name>flash</name>\n  <owner>aaronpetkau</owner>\n  <url>https://testtoolshed.g2.bx.psu.edu</url>\n  <revision>b64409be8c69</revision>\n  <!--WARNING: Latest revision fetched from https://testtoolshed.g2.bx.psu.edu/repos/aaronpetkau/flash-->\n</repository>\n")
 
 (def sistr-cmd-step
   {"tool_errors"       nil,

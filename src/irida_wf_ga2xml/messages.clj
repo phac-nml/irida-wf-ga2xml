@@ -45,7 +45,7 @@
 
 (defn xml-filename
   [html]
-  (if-let [[_ filename] (re-find (re-pattern "class=\"filename\">\\s*<a href=\"\\S*\\/repos\\/\\w+\\/\\w+\\/file\\/\\w+\\/(\\w+\\.xml)\"") html)]
+  (if-let [[_ filename] (re-find (re-pattern "class=\"filename\">\\s*<a href=\"\\S*\\/repos\\/[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+\\/file\\/\\w+\\/([A-Za-z0-9_-]+\\.xml)\"") html)]
     filename
     nil))
 
@@ -65,7 +65,6 @@
   (let [{:keys [name url owner revision]} repo-info]
     (str url "/repos/" owner "/" name "/raw-file/" revision "/" filename)))
 
-
 (defn xml-url->zipper
   "Read and parse an XML file from a `url` and return a zipper for the parsed XML starting at the root element."
   [url]
@@ -77,7 +76,9 @@
 (defn name-kw
   "Get an XML `node` element's `:name` attribute as a keyword."
   [node]
-  (keyword (attr node :name)))
+  (keyword (if (nil? (attr node :name))  ; Galaxy parameters with argument attributes sometimes have no name attribute
+             (clojure.string/replace-first (attr node :argument) #"^-+" "") 
+             (attr node :name))))
 
 (defn get-param-values
   "Given an Galaxy tool XML `zipper`, get potentially nested map of param tag name attribute to `get-attr` attribute values (default :label).
@@ -127,9 +128,6 @@
           conditionals (iter-non-param-elements :conditional)]
       (into {} (concat params sections conditionals)))))
 
-
-
-
 (defn flatten-param-values-map
   "Flatten a nested tool param values map.
 
@@ -158,21 +156,23 @@
   [repo-info & {:keys [attrs]
                 :or   {attrs [:label :type]}}]
   (try
-    (let [zipper (->> repo-info
+    (if (seq repo-info)  ; some steps (e.g. expression tools) don't have an associated tool repository
+      (let [zipper (->> repo-info
                       (get-toolshed-browse-html)
                       (xml-filename)
                       (raw-file-xml-url repo-info)
                       (xml-url->zipper))]
-      (into {} (map
-                 (fn [attr]
-                   {attr
-                    (-> zipper
-                        (get-param-values :attrs attr)
-                        (flatten-param-values-map))})
-                 attrs)))
-    (catch Exception e
-      (error "Could not get tool parameter attribute info for" repo-info "; Encountered error:" e)
-      nil)))
+        (into {} (map
+                (fn [attr]
+                  {attr
+                   (-> zipper
+                       (get-param-values :attrs attr)
+                       (flatten-param-values-map))})
+                attrs)))
+      {})  ; return empty map if the tool has no tool repository
+  (catch Exception e
+    (error "Could not get tool parameter attribute info for" repo-info "; Encountered error:" e)
+    nil)))
 
 (defn tool-step->param-attr-map
   "Given a Galaxy workflow `tool-step` map, get all tool param attributes from the Galaxy tool wrapper XML.

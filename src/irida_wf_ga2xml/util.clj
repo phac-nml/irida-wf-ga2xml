@@ -3,7 +3,9 @@
             [clojure.data.json :as json]
             [clojure.data.xml :as xml :refer [element emit emit-str sexp-as-element indent-str]]
             [clojure.data.json :as json])
-  (:import (clojure.lang Keyword PersistentVector)))
+  (:import     
+   (clojure.lang Keyword PersistentVector)
+           ))
 
 (def tool-id-repos-pattern (re-pattern "/repos/"))
 (def slash-pattern (re-pattern "/"))
@@ -119,10 +121,12 @@
 
 (defn step-input-name-reference?
   "Is workflow step reference input file for a workflow that requires a reference file? (e.g. SNVPhyl)"
-  [{:strs [tool_state]}]
-  (let [tool_state (json/read-str tool_state)
+  [{:strs [tool_state name label]}]
+  (or (= name "reference")
+      (= label "reference")
+      (let [tool_state (json/read-str tool_state)
         {:strs [name]} tool_state]
-    (= name "reference")))
+        (= name "reference"))))
 
 (defn input-steps
   "Get \"data_input\"/\"data_collection_input\" type workflow steps.
@@ -169,10 +173,10 @@
 
 (defn input-name
   "Name attribute of an input step from 'tool_state' map."
-  [{:strs [tool_state]}]
+  [{:strs [tool_state label]}]
   (let [tool_state (json/read-str tool_state)
         {:strs [name]} tool_state]
-    name))
+    (if (nil? name) label name)))
 
 (defn parameter-name
   "IRIDA workflow XML tool parameter name.
