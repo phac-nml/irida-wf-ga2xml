@@ -4,39 +4,8 @@
             [clojure.data.xml :as xml :refer [element emit emit-str sexp-as-element indent-str]]
             [clojure.data.json :as json])
   (:import     
-   [javax.net.ssl X509TrustManager SSLContext]
    (clojure.lang Keyword PersistentVector)
            ))
-
-; create a socket factory that accepts all SSL without checking the certificate
-; this is necessary because of problems with java and the certificate on irida.corefacility.ca
-(defn set-socket-factory [conn]
-  (let [cert-manager (make-array X509TrustManager 1)
-        sc           (SSLContext/getInstance "SSL")]
-    (aset cert-manager 0
-          (proxy [X509TrustManager] []
-            (getAcceptedIssuers [])
-            (checkClientTrusted [_ _])
-            (checkServerTrusted [_ _])))
-    (.init sc nil cert-manager (java.security.SecureRandom.))
-    (.setSSLSocketFactory conn (.getSocketFactory sc))))
-
-(defn read_all_bytes [input_stream]
-  (let [buffer_size 16384]
-    (loop [buffer (byte-array buffer_size)
-           bytes_read (.read input_stream buffer)
-           text (apply str (map #(char (bit-and % 255)) (filter #(> % 0) buffer)))]
-      (if (= bytes_read -1)
-        text
-        (recur (byte-array buffer_size)
-               (.read input_stream buffer)
-               (str text (apply str (map #(char (bit-and % 255)) (filter #(> % 0) buffer)))))))))
-
-(defn slurp-nocheck-sslcert [url] ; this is a replacement for the Clojure slurp function 
-  (let [conn (.openConnection (java.net.URL. url))] 
-    (if (.contains url "://irida.corefacility.ca") ; this ignores SSL certificate errors only for host irida.corefacility.ca
-      (set-socket-factory conn))
-    (read_all_bytes (.getInputStream conn))))
 
 (def tool-id-repos-pattern (re-pattern "/repos/"))
 (def slash-pattern (re-pattern "/"))
