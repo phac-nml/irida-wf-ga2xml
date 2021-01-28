@@ -11,9 +11,9 @@
 
 (def flash-repo-info
   {:name     "flash"
-   :owner    "irida"
-   :revision "4287dd541327"
-   :url      "https://irida.corefacility.ca/galaxy-shed"})
+   :owner    "aaronpetkau"
+   :revision "b64409be8c69"
+   :url      "https://testtoolshed.g2.bx.psu.edu"})
 
 (def biohansel-repo-info
   {:owner    "nml"

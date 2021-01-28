@@ -89,7 +89,7 @@ Command-line for creating SNVPhyl v1.0.1 workflow files:
 
     18-08-14 21:46:55 pk INFO [irida-wf-ga2xml.main:102] - Parsing  test/data/snvphyl-1.0.1-workflow.ga  Galaxy workflow file. Creating irida_workflow.xml with workflow name ' SNVPhyl ' and version ' 1.0.1 '.
     18-08-14 21:46:55 pk INFO [irida-wf-ga2xml.core:119] - Parsed Galaxy workflow file with name='SNVPhyl v1.0.1 Paired-End' and annotation/description='snvphyl'
-    18-08-14 21:46:55 pk INFO [irida-wf-ga2xml.core:121] - Using worklfow name='SNVPhyl'
+    18-08-14 21:46:55 pk INFO [irida-wf-ga2xml.core:121] - Using workflow name='SNVPhyl'
     18-08-14 21:46:56 pk INFO [irida-wf-ga2xml.core:123] - 16 input steps in workflow
     18-08-14 21:46:56 pk INFO [irida-wf-ga2xml.core:125] - 17 tool execution steps in workflow
     18-08-14 21:47:03 pk ERROR [irida-wf-ga2xml.messages:174] - Could not get tool parameter attribute info for {} ; Encountered error: java.io.FileNotFoundException: /repos/file (No such file or directory)

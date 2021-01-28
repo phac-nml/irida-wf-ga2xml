@@ -124,7 +124,7 @@
         {:strs [name annotation]} ga-map
         _ (info (str "Parsed Galaxy workflow file with name='" name "' and annotation/description='" annotation "'"))
         name (safe-workflow-name (if wf-name wf-name name))
-        _ (info (str "Using worklfow name='" name "'"))
+        _ (info (str "Using workflow name='" name "'"))
         input (input-steps ga-map)
         _ (info (count input) "input steps in workflow")
         steps (tool-steps ga-map)
