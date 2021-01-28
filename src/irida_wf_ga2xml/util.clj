@@ -244,7 +244,7 @@
    12 [a-f0-9] characters after '/rev/'"
   [url]
   (try
-    (let [html (slurp-nocheck-sslcert url)]
+    (let [html (slurp url)]
       (second (re-find #"/rev/([a-f0-9]{12})" html)))
     (catch Exception _
       nil)))

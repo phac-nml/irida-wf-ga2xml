@@ -41,7 +41,7 @@
    "
   [repo-info]
   (let [{:keys [name owner url revision]} repo-info]
-    (util/slurp-nocheck-sslcert (str url "/repos/" owner "/" name "/file/" revision))))
+    (slurp (str url "/repos/" owner "/" name "/file/" revision))))
 
 (defn xml-filename
   [html]
@@ -69,7 +69,7 @@
   "Read and parse an XML file from a `url` and return a zipper for the parsed XML starting at the root element."
   [url]
   (-> url
-      util/slurp-nocheck-sslcert
+      slurp
       xml/parse-str
       zip/xml-zip))
 
