@@ -125,7 +125,7 @@
             (io/make-parents ga-file-dest)
             (spit irida-xml-filename xml-str)
             (info "Wrote workflow XML to " irida-xml-filename)
-            (spit ga-file-dest (generate-string (decode (slurp input)) {:pretty true}))
+            (spit ga-file-dest (generate-string (assoc (decode (slurp input)) "name" workflow-name) {:pretty true}))
             (info "Wrote Galaxy workflow *.ga file to " ga-file-dest)
             (if-let [[main-props tool-param-props] (:props irida-wf-map)]
               (let [msg-props-file (.toString (file-with-base "messages_en.properties"))]
