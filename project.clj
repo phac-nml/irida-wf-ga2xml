@@ -1,4 +1,4 @@
-(defproject irida-wf-ga2xml "1.2.0"
+(defproject irida-wf-ga2xml "1.2.1"
   :description "Parse a Galaxy workflow ga JSON file and output an IRIDA workflow description XML file"
   :url "https://github.com/phac-nml/irida-wf-ga2xml"
   :license {:name "Apache License 2.0"
