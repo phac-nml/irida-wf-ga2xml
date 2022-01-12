@@ -1,6 +1,10 @@
 Changes
 ======
 
+1.2.0 to 1.2.1
+--------------
+* [Bug Fix] `name` field in .ga file is now kept consistant with xml files.
+
 1.1.0 to 1.2.0
 --------------
 * [Feature / Bug fix] Added more flexibility in finding reference data, supporting newer versions of galaxy
